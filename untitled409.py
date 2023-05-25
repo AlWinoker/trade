@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed May 24 11:57:38 2023
-
-@author: 14015
-"""
-
-# -*- coding: utf-8 -*-
-"""
 Created on Wed May 24 09:54:44 2023
 
 @author: 14015
@@ -257,8 +250,8 @@ completelist = []
 from collections import Counter
 from datetime import datetime
 
-API_KEY = ''
-SECRET_KEY = ''
+API_KEY = 'SAZ4fQcaMP8tf9fMvIm9xUITR5nFGy1ymNIyTjCKdmSrBLApjAd2Np62pezBYEBo'
+SECRET_KEY = 'c905nffp3XL4QVKGJ0ag38bxhzSVBfkKefUPXLPujWxH7xZAvPVNeV8E82JmE6ev'
 BASE_URL = 'https://api.binance.us'
 
 client = Client(API_KEY, SECRET_KEY, tld='us')
@@ -879,7 +872,7 @@ def stonks(tickabalooza):
             klines=klines.set_index('datetime')
             df = klines.copy()
         #   print(df)
-            df.drop(df.tail(len(df)-1*24).index,inplace = True)
+            df.drop(df.tail(len(df)-2*24).index,inplace = True)
             print('stonks1')
             datetime_obj=datetime.fromtimestamp(float(df.index[0])/1000)
             print(datetime_obj)
@@ -940,7 +933,25 @@ def stonks(tickabalooza):
             #         # print(df)
             #         feature_columns.append('open'+str(i))
                     
-                   
+             #  print(df)
+            dfc1=df.copy()
+            dfc1.drop(dfc1.tail(24).index,inplace = True)
+            
+            
+            print('weight day')
+            datetime_obj=datetime.fromtimestamp(float(dfc1.index[0])/1000)
+            print(datetime_obj)
+            datetime_obj=datetime.fromtimestamp(float(dfc1.index[-1])/1000)
+            print(datetime_obj)
+            
+            df.drop(df.head(24).index,inplace = True)   
+            
+            print('test day')
+            datetime_obj=datetime.fromtimestamp(float(df.index[0])/1000)
+            print(datetime_obj)
+            datetime_obj=datetime.fromtimestamp(float(df.index[-1])/1000)
+            print(datetime_obj)
+            
           #  print(df)
             finalTimeOnData = list(df.index.values)[-1].copy()
             #print((time.time()-list(df.index.values)[-1]/1000)/60)
@@ -964,7 +975,8 @@ def stonks(tickabalooza):
             # scale the data (prices) from 0 to 1
             for column in feature_columns:
                 scaler = preprocessing.MinMaxScaler()
-                df[column] = scaler.fit_transform(np.expand_dims(df[column].values, axis=1))
+                scaler.fit(np.expand_dims(dfc1[column].values, axis=1))
+                df[column] = scaler.transform(np.expand_dims(df[column].values, axis=1))
                 column_scaler[column] = scaler
             # add the MinMaxScaler instances to the result returned
             result["column_scaler"] = column_scaler
