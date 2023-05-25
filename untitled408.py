@@ -889,7 +889,7 @@ def stonks(tickabalooza):
            # resp = requests.get(html)
            # atemp1=resp.json()
          #   ttemp1=pd.DataFrame(data=atemp1['candles'])
-            numberOfDays = 14
+            numberOfDays = 1
             klines = client.get_historical_klines("BTCUSDT", Client.KLINE_INTERVAL_1HOUR, str(numberOfDays) + "days ago UTC")
             klines = pd.DataFrame(data=klines)
             klines=klines.astype(float)
@@ -1095,7 +1095,7 @@ def stonks(tickabalooza):
     SPLIT_BY_DATE = False
     split_by_date_str = f"sbd-{int(SPLIT_BY_DATE)}"
     # test ratio size, 0.2 is 20%
-    TEST_SIZE = 0.99
+    TEST_SIZE = 0.8
     # features to us
     FEATURE_COLUMNS = ["close", "volume", "open", "high", "low","this","that","then","we","yes","maybe"]
     # date now
