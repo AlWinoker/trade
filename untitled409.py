@@ -859,7 +859,7 @@ def stonks(tickabalooza):
            # resp = requests.get(html)
            # atemp1=resp.json()
          #   ttemp1=pd.DataFrame(data=atemp1['candles'])
-            numberOfDays = currentDay
+            numberOfDays = currentDay+1
             klines = client.get_historical_klines("BTCUSDT", Client.KLINE_INTERVAL_1HOUR, str(numberOfDays) + "days ago UTC")
             klines = pd.DataFrame(data=klines)
             klines=klines.astype(float)
